@@ -1,0 +1,24 @@
+extends base
+
+block content
+    main.main
+        .div-container
+            a.back-homepage.button-68(href="/") Back to Home Page
+            each shipment in shipments.data
+                .div-product
+                    h2.product-name
+                        span= `${shipment.name}`
+                    h2.product-name
+                        span= `Tracking number: ${shipment.id}`
+                    h2.product-name 
+                        span= `Qty: ${shipment.shipQty}`
+                    h2.product-name
+                        span= `Ship to: ${shipment.shipTo}`
+                    h2.product-name
+                        span= `Shipping Date: ${shipment.shipDate}`
+                    a.btn-delete.button-68(id=`btn--delete` type="button" href=`/deleteShipment/${shipment.id}`)
+                        span Delete
+
+                    
+
+

@@ -7,6 +7,11 @@ const getProducts = async () => {
   const response = await axios.get(url);
   return response.data.data;
 };
+const getShipments = async () => {
+  const url = `http://localhost:3000/api/shipments/`;
+  const response = await axios.get(url);
+  return response.data.data;
+};
 // Generating overview page
 exports.getOverview = catchAsync(async (req, res, next) => {
   // 1) Get products data from collection
@@ -58,4 +63,20 @@ exports.deleteProduct = catchAsync(async (req, res) => {
   await axios.delete(url);
   setTimeout(() => {}, 1000);
   res.redirect('/');
+});
+
+exports.getShipments = catchAsync(async (req, res, next) => {
+  // 1) Get products data from collection
+  const shipments = await getShipments();
+  // console.log(products.data[0]);
+  res.status(200).render('shipmentsList', {
+    title: 'Shipments',
+    shipments,
+  });
+});
+exports.deleteShipment = catchAsync(async (req, res) => {
+  const url = `http://localhost:3000/api/shipments/${req.params.id}`;
+  await axios.delete(url);
+  setTimeout(() => {}, 1000);
+  res.redirect('/shipments');
 });

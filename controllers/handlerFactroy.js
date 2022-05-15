@@ -279,12 +279,14 @@ exports.createShipment = () =>
       (product) => product.name === req.query.name
     );
     console.log(req.query)
+    console.log(product)
     // console.log(products);
-    if (req.query.shipQty > product.quantity) {
+    if (req.query.shipQty > parseInt(product.quantity)) {
       return next(new AppError(`Quantity to ship is greater than the quantity in stock`, 400));
     }
     // Create a new product object, push it to the products array and write it to the json file
     const newShipment = req.query;
+    newShipment.id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5).toUpperCase();
     shipments.push(newShipment);
     product.quantity -= newShipment.shipQty;
     fs.writeFile(
@@ -319,18 +321,45 @@ exports.createShipment = () =>
 
 exports.getAllShipments = () =>
   catchAsync(async (req, res, next) => {
-    const productsWithWeather = await Promise.all(
-      products.map(async (product) => {
-        const city = cityObj.find((city) => city.city === product.city);
-        const weather = await getWeather(city.lat, city.lon);
-        return { ...product, weather };
-      })
+    res.status(200).json({
+      status: 'success',
+      results: shipments.length,
+      data: {
+        data: shipments,
+      },
+    });
+  });
+
+exports.deleteShipment = () =>
+  catchAsync(async (req, res, next) => {
+    const shipment = await shipments.find(
+      (shipment) => shipment.id === req.params.id
+    );
+    // If the product does not exist, return an error
+    if (!shipment) {
+      return next(
+        new AppError(`No product with the id of ${req.params.id}`, 404)
+      );
+    }
+    // Remove the product from the products array
+    console.log(shipment.id);
+    console.log(req.params.id);
+    shipments = shipments.filter(
+      (shipment) => shipment.id !== req.params.id
+    );
+    // Write the new products to the json file
+    fs.writeFile(
+      `${__dirname}/../data/shipments.json`,
+      JSON.stringify(shipments),
+      (err) => {
+        if (err) {
+          return next(new AppError(`Failed to delete the shipment`, 500));
+        }
+        console.log('The shipment has been deteled successfully');
+      }
     );
     res.status(200).json({
       status: 'success',
-      results: products.length,
-      data: {
-        data: productsWithWeather,
-      },
+      message: 'shipment deleted successfully',
     });
   });
