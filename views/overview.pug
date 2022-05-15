@@ -16,9 +16,9 @@ block content
                         span= `Qty: ${product.quantity}`
                     h2.product-name
                         span= `Location: ${product.city}`
-                    h2.product-weather 
-                        span= `${product.weather[0].description}`
-                    img.weather-img(src=`https://openweathermap.org/img/wn/${product.weather[0].icon}@2x.png`, alt="weather icon")
+                    //- h2.product-weather 
+                    //-     span= `${product.weather[0].description}`
+                    //- img.weather-img(src=`https://openweathermap.org/img/wn/${product.weather[0].icon}@2x.png`, alt="weather icon")
                     a.btn-shipment.button-68(id=`btn--shipment` type="button" href=`/createShipment/${product.slug}`)
                         span Create Shipment
                     a.btn-update.button-68(id=`btn--update` type="button" href=`/updateProduct/${product.slug}`)
