@@ -1,0 +1,36 @@
+extends base
+
+block content 
+  main.main
+    .div-container
+      a.back-homepage.button-68(href="/") Back to Home Page
+    .form-style-10  
+      h1 Create Shipment
+        form.form-createShipment.form
+          .form__group.inner-wrap
+            label.form__label(for='text') Product ID (read only)
+            input#product_id_1.form__input(type='number', value=`${product.id}`, readonly, required)
+            label.form__label(for='text') Name (read only)
+            input#product_name.form__input(type='text', value=`${product.name}`, readonly, placeholder='Quantity of product',required)
+            label.form__label(for='number') Quantity in stock (read only)
+            input#product_qty.form__input(type='number', value=`${product.quantity}`, readonly, placeholder='Quantity of product', required)
+            label.form__label(for='text') Location (read only)
+            input#product_city.form__input(type='text', value=`${product.city}`, readonly, required)
+            //- select#product_city.form__input(required readonly, value=`${product.city}`)
+              //- option.option-location.select__default(value=`${product.city}`)
+              //- option.option-location(value="New York") New York 
+              //- option.option-location(value="San Francisco") San Francisco
+              //- option.option-location(value="Los Angeles") Los Angeles
+              //- option.option-location(value="Chicago") Chicago
+              //- option.option-location(value="Boston") Boston
+            label.form__label(for='text') Description (read only)
+            input#product_des.form__input(type='text', readonly, placeholder='Description', value=`${product.description}`,required)
+            label.form__label(for='number') Shipping Quantity
+            input#product_shipQty.form__input(type='number', placeholder='Quantity',required)
+            label.form__label(for='text') Ship to address
+            input#product_shipTo.form__input(type='text', placeholder='Ship to...',required)
+            label.form__label(for='Date') Shipping Date
+            input#product_shipDate.form__input(type='date', value="2022-01-01", min="2022-01-01", max="2024-12-31",required)
+            //- input#product_des.form__input(type='text', placeholder='Description', required)
+          .form__group
+            button.btn.btn--green.button-68 Create Shipment

@@ -1,0 +1,29 @@
+extends base
+
+block content
+    main.main
+        .div-container
+            .div-addProduct
+                a.a-addProduct.button-68(href='/addProduct')
+                    span Add Product
+            each product in products.data
+                .div-product
+                    h2.product-name
+                        span= `${product.name}`
+                    h2.product-name 
+                        span= `Qty: ${product.quantity}`
+                    h2.product-name
+                        span= `Location: ${product.city}`
+                    h2.product-weather 
+                        span= `${product.weather[0].description}`
+                    img.weather-img(src=`https://openweathermap.org/img/wn/${product.weather[0].icon}@2x.png`, alt="weather icon")
+                    a.btn-shipment.button-68(id=`btn--shipment` type="button" href=`/createShipment/${product.slug}`)
+                        span Create Shipment
+                    a.btn-update.button-68(id=`btn--update` type="button" href=`/updateProduct/${product.slug}`)
+                        span Update/View
+                    a.btn-delete.button-68(id=`btn--delete` type="button" href=`/deleteProduct/${product.id}`)
+                        span Delete
+
+                    
+
+
